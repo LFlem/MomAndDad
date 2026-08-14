@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joyeux anniversaire Maman — notre livre pour toi</title>
+
+<!--
+  ╭──────────────────────────────────────────────────────────────╮
+  │  COMMENT UTILISER CE LIVRE                                    │
+  │  • Ouvre ce fichier dans un navigateur (double-clic).        │
+  │  • Tourne les pages : flèches à l'écran, flèches du clavier  │
+  │    (← →), ou glisse le doigt sur téléphone.                   │
+  │  • Clique sur n'importe quel texte pour l'écrire à ta façon. │
+  │  • Sur les pages Souvenirs / Moments : « + Ajouter » pour    │
+  │    charger tes photos et vidéos (aucun code à toucher).      │
+  │  Note : les photos ajoutées par le bouton restent le temps   │
+  │  de l'ouverture (parfait pour lui montrer en direct). Pour   │
+  │  une version permanente à envoyer, demande-moi.              │
+  ╰──────────────────────────────────────────────────────────────╯
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Parisienne&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --wine:#43172B; --wine-2:#5E2440; --rose:#C15B7E; --blush:#F6DDE4;
+    --gold:#E3B25A; --gold-soft:#EFCE8E; --cream:#FBF1E8; --ink:#3A2029;
+    --paper-1:#FCF6EF; --paper-2:#F4E7DA;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Karla',system-ui,sans-serif;color:var(--ink);
+    background:#2C0E1D;-webkit-font-smoothing:antialiased;overflow:hidden;
+  }
+  ::selection{background:var(--gold-soft);color:var(--wine)}
+  [contenteditable]{outline:none;transition:background .25s ease;border-radius:6px}
+  [contenteditable]:hover{background:rgba(227,178,90,.16)}
+  [contenteditable]:focus{background:rgba(227,178,90,.22);box-shadow:0 0 0 2px rgba(227,178,90,.55)}
+
+  /* ---------- STAGE ---------- */
+  .stage{
+    min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:clamp(10px,2.5vh,26px);
+    background:
+      radial-gradient(120% 80% at 50% -10%, rgba(193,91,126,.45), transparent 55%),
+      radial-gradient(140% 120% at 50% 120%, #2C0E1D 0%, var(--wine) 48%, var(--wine-2) 100%);
+  }
+  .book{position:relative;width:min(94vw,600px);height:min(84svh,760px);perspective:2400px}
+
+  /* ---------- PAGES ---------- */
+  .page{
+    position:absolute;inset:0;display:none;flex-direction:column;
+    transform-origin:left center;backface-visibility:hidden;
+    border-radius:5px 13px 13px 5px;overflow:hidden;
+    box-shadow:0 30px 70px rgba(0,0,0,.45);
+  }
+  .page.is-active{display:flex}
+  .page-inner{
+    position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;
+    padding:clamp(30px,6.5vw,58px);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    gap:1.1rem;
+  }
+  .page-inner::-webkit-scrollbar{width:7px}
+  .page-inner::-webkit-scrollbar-thumb{background:rgba(122,43,73,.35);border-radius:20px}
+
+  .pg-paper{background:linear-gradient(140deg,var(--paper-1),var(--paper-2));color:var(--ink)}
+  .pg-paper::before{content:"";position:absolute;top:0;bottom:0;left:0;width:34px;
+    background:linear-gradient(90deg,rgba(74,29,51,.18),transparent);pointer-events:none;z-index:3}
+  .pg-dark{background:
+      radial-gradient(120% 80% at 50% 8%, rgba(193,91,126,.5), transparent 55%),
+      linear-gradient(160deg,#3A0F22,var(--wine) 60%,var(--wine-2));color:var(--cream)}
+
+  .pagenum{position:absolute;bottom:14px;left:0;right:0;text-align:center;
+    font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(122,43,73,.5);z-index:4}
+  .pg-dark .pagenum{color:rgba(239,206,142,.55)}
+
+  /* content fade when a page becomes active */
+  .is-active .anim{opacity:0;transform:translateY(20px);animation:contentIn .8s ease forwards}
+  .is-active .anim:nth-child(2){animation-delay:.12s}
+  .is-active .anim:nth-child(3){animation-delay:.22s}
+  .is-active .anim:nth-child(4){animation-delay:.32s}
+  .is-active .anim:nth-child(5){animation-delay:.42s}
+  @keyframes contentIn{to{opacity:1;transform:translateY(0)}}
+
+  /* ---------- COVER ---------- */
+  .sparkles{position:absolute;inset:0;pointer-events:none;z-index:1}
+  .sparkle{position:absolute;color:var(--gold-soft);opacity:0;animation:rise linear infinite;will-change:transform,opacity}
+  @keyframes rise{
+    0%{transform:translateY(14px) scale(.4) rotate(0);opacity:0}
+    12%{opacity:.9}88%{opacity:.6}
+    100%{transform:translateY(-84svh) scale(1) rotate(140deg);opacity:0}
+  }
+  .greeting{font-family:'Parisienne',cursive;font-size:clamp(2.2rem,8vw,3.6rem);color:var(--gold-soft);line-height:1}
+  .name{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(3rem,14vw,6rem);line-height:.95;
+    margin:.08em 0 .3em;color:var(--cream)}
+  .hero-sub{font-weight:300;font-size:clamp(.98rem,2.6vw,1.2rem);color:rgba(251,241,232,.85);max-width:30ch}
+
+  .cake-wrap{margin-top:clamp(1rem,4vh,2rem);display:flex;flex-direction:column;align-items:center;gap:.6rem}
+  .cake-btn{background:none;border:none;cursor:pointer;padding:0;line-height:0;
+    filter:drop-shadow(0 14px 24px rgba(0,0,0,.4));transition:transform .3s ease}
+  .cake-btn:hover{transform:translateY(-4px)}
+  .cake-btn:focus-visible{outline:3px solid var(--gold-soft);outline-offset:8px;border-radius:12px}
+  .flame{transform-origin:center bottom;animation:flicker 1.4s ease-in-out infinite}
+  .flame.out{opacity:0;transition:opacity .5s ease}
+  .smoke{opacity:0}
+  .smoke.go{animation:puff 1.3s ease-out forwards}
+  @keyframes flicker{0%,100%{transform:scale(1) translateY(0);opacity:1}50%{transform:scale(1.12,.9) translateY(-1px);opacity:.85}}
+  @keyframes puff{0%{opacity:.6;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-30px) scale(1.6)}}
+  .cake-hint{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(239,206,142,.85);transition:color .4s ease}
+  .cake-hint.done{color:var(--gold-soft)}
+
+  /* ---------- LETTER PAGES ---------- */
+  .eyebrow{font-family:'Parisienne',cursive;font-size:clamp(1.7rem,5vw,2.4rem);color:var(--rose);line-height:1}
+  .pg-dark .eyebrow{color:var(--gold-soft)}
+  .letter{font-family:'Fraunces',serif;font-weight:400;font-style:italic;
+    font-size:clamp(1.2rem,3.6vw,1.6rem);line-height:1.6;color:var(--wine);max-width:26ch}
+  .letter.small{font-size:clamp(1.05rem,3vw,1.32rem)}
+  .divider{width:70px;height:2px;border:none;background:var(--gold);opacity:.8;position:relative;margin:.4rem auto 0}
+  .divider::before,.divider::after{content:"";position:absolute;top:50%;width:6px;height:6px;border-radius:50%;background:var(--rose);transform:translateY(-50%)}
+  .divider::before{left:-13px}.divider::after{right:-13px}
+  .sec-title{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.7rem,5.2vw,2.5rem);color:var(--wine);letter-spacing:-.01em}
+  .pg-dark .sec-title{color:var(--cream)}
+
+  /* names row */
+  .kids{display:flex;flex-wrap:wrap;gap:.4rem 1.1rem;justify-content:center;font-family:'Fraunces',serif;
+    font-size:clamp(1.05rem,3.4vw,1.5rem);color:var(--rose)}
+  .kids b{font-weight:600}
+  .kids span{font-size:.7em;opacity:.7;font-style:italic;font-family:'Karla',sans-serif;display:block;color:#8a6472}
+
+  /* ---------- MEDIA GRIDS ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px;width:100%;align-content:start}
+  .frame{background:#fff;padding:9px 9px 30px;border-radius:3px;box-shadow:0 8px 22px rgba(67,23,43,.16);position:relative}
+  .frame:nth-child(3n+1){transform:rotate(-1.6deg)}
+  .frame:nth-child(3n+2){transform:rotate(1deg)}
+  .frame img,.frame video{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:2px;display:block;background:#eee}
+  .frame video{aspect-ratio:auto}
+  .caption{position:absolute;left:9px;right:9px;bottom:8px;text-align:center;font-family:'Fraunces',serif;font-style:italic;color:#7a5563;font-size:.82rem}
+  .remove{position:absolute;top:-9px;right:-9px;width:26px;height:26px;border-radius:50%;border:none;background:var(--wine);color:#fff;cursor:pointer;font-size:14px;line-height:1;box-shadow:0 3px 9px rgba(0,0,0,.3)}
+  .add-tile{border:2.4px dashed var(--rose);background:rgba(193,91,126,.06);border-radius:8px;min-height:150px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem;cursor:pointer;
+    color:var(--rose);font-weight:500;font-family:'Karla',sans-serif;font-size:.92rem;text-align:center;padding:14px;transition:background .2s ease}
+  .add-tile:hover{background:rgba(193,91,126,.13)}
+  .add-tile:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+  .add-tile .plus{font-size:2rem;line-height:1;font-weight:300}
+  .add-tile small{font-weight:300;opacity:.75;font-size:.72rem}
+
+  .heart{font-size:1.7rem;animation:beat 1.6s ease-in-out infinite;display:inline-block}
+  @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.22)}30%{transform:scale(1)}}
+
+  /* ---------- CONTROLS ---------- */
+  .controls{margin-top:clamp(12px,2.5vh,20px);display:flex;align-items:center;gap:16px;color:var(--cream)}
+  .nav-btn{width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(239,206,142,.5);
+    background:rgba(251,241,232,.08);color:var(--gold-soft);font-size:1.3rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease}
+  .nav-btn:hover:not(:disabled){background:rgba(239,206,142,.18);transform:scale(1.06)}
+  .nav-btn:disabled{opacity:.3;cursor:default}
+  .nav-btn:focus-visible{outline:3px solid var(--gold-soft);outline-offset:3px}
+  .dots{display:flex;gap:8px}
+  .dot{width:8px;height:8px;border-radius:50%;border:none;padding:0;background:rgba(239,206,142,.35);cursor:pointer;transition:all .2s ease}
+  .dot.active{background:var(--gold-soft);transform:scale(1.35)}
+
+  .side-nav{position:fixed;top:50%;transform:translateY(-50%);z-index:20;
+    width:54px;height:54px;border-radius:50%;border:none;background:rgba(251,241,232,.1);
+    color:var(--cream);font-size:1.5rem;cursor:pointer;display:none;align-items:center;justify-content:center}
+  .side-nav:hover:not(:disabled){background:rgba(251,241,232,.2)}
+  .side-nav:disabled{opacity:.25;cursor:default}
+  .side-prev{left:calc(50% - min(47vw,300px) - 68px)}
+  .side-next{right:calc(50% - min(47vw,300px) - 68px)}
+  @media(min-width:920px){.side-nav{display:flex}}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important}
+    .is-active .anim{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <button class="side-nav side-prev" id="sidePrev" aria-label="Page précédente">‹</button>
+
+  <div class="book" id="book">
+
+    <!-- 0 · COUVERTURE -->
+    <article class="page pg-dark" data-cover>
+      <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+      <div class="page-inner">
+        <div class="greeting anim">Joyeux anniversaire</div>
+        <h1 class="name anim" contenteditable="true" spellcheck="false">Maman</h1>
+        <p class="hero-sub anim" contenteditable="true" spellcheck="false">Aujourd'hui, le monde entier devrait s'arrêter pour te fêter.</p>
+        <div class="cake-wrap anim">
+          <button class="cake-btn" id="cakeBtn" aria-label="Souffler les bougies">
+            <svg width="140" height="122" viewBox="0 0 150 130" xmlns="http://www.w3.org/2000/svg">
+              <g class="flame"><ellipse cx="45" cy="24" rx="4.5" ry="8" fill="#FFD98A"/><ellipse cx="45" cy="26" rx="2.4" ry="4.5" fill="#FF9E4A"/></g>
+              <g class="flame" style="animation-delay:.3s"><ellipse cx="75" cy="18" rx="4.5" ry="8.5" fill="#FFD98A"/><ellipse cx="75" cy="20" rx="2.4" ry="4.8" fill="#FF9E4A"/></g>
+              <g class="flame" style="animation-delay:.6s"><ellipse cx="105" cy="24" rx="4.5" ry="8" fill="#FFD98A"/><ellipse cx="105" cy="26" rx="2.4" ry="4.5" fill="#FF9E4A"/></g>
+              <circle class="smoke" cx="45" cy="24" r="3" fill="#cbb9c2"/><circle class="smoke" cx="75" cy="18" r="3" fill="#cbb9c2"/><circle class="smoke" cx="105" cy="24" r="3" fill="#cbb9c2"/>
+              <rect x="43" y="32" width="4" height="22" rx="2" fill="#F6DDE4"/><rect x="73" y="26" width="4" height="28" rx="2" fill="#EFCE8E"/><rect x="103" y="32" width="4" height="22" rx="2" fill="#F6DDE4"/>
+              <rect x="24" y="54" width="102" height="30" rx="10" fill="#C15B7E"/>
+              <path d="M24 64 q13 12 26 0 t26 0 t26 0 t22 0 v20 q0 8-8 8 H32 q-8 0-8-8 Z" fill="#EFCE8E"/>
+              <rect x="18" y="82" width="114" height="34" rx="12" fill="#7A2B49"/><rect x="18" y="82" width="114" height="10" rx="5" fill="#8E3557"/>
+              <circle cx="40" cy="99" r="3" fill="#EFCE8E"/><circle cx="62" cy="103" r="3" fill="#F6DDE4"/><circle cx="88" cy="99" r="3" fill="#F6DDE4"/><circle cx="110" cy="103" r="3" fill="#EFCE8E"/>
+            </svg>
+          </button>
+          <span class="cake-hint" id="cakeHint">Souffle les bougies, puis tourne la page →</span>
+        </div>
+      </div>
+      <div class="pagenum">Notre livre pour toi</div>
+    </article>
+
+    <!-- 1 · DÉDICACE -->
+    <article class="page pg-paper">
+      <div class="page-inner">
+        <div class="eyebrow anim">Maman,</div>
+        <p class="letter anim" contenteditable="true" spellcheck="false">Il y a des combats qu'on mène en silence, pour que ceux qu'on aime n'aient jamais à les connaître.</p>
+        <p class="letter small anim" contenteditable="true" spellcheck="false">Toute votre vie, Papa et toi, vous vous êtes battus pour nous offrir mieux : une vie plus douce, un avenir plus grand que le vôtre.</p>
+        <hr class="divider anim">
+      </div>
+      <div class="pagenum">1</div>
+    </article>
+
+    <!-- 2 · SON COMBAT -->
+    <article class="page pg-paper">
+      <div class="page-inner">
+        <div class="eyebrow anim">Et toi,</div>
+        <p class="letter anim" contenteditable="true" spellcheck="false">tu ne t'es jamais arrêtée. Tu t'es battue — et tu te bats encore — pour notre éducation, pour qu'on ne manque jamais de rien.</p>
+        <p class="letter small anim" contenteditable="true" spellcheck="false">Si aujourd'hui nous avançons dans la vie, c'est parce que tu nous as ouvert le chemin, jour après jour, sans jamais te plaindre.</p>
+        <hr class="divider anim">
+      </div>
+      <div class="pagenum">2</div>
+    </article>
+
+    <!-- 3 · SOUVENIRS (PHOTOS) -->
+    <article class="page pg-paper">
+      <div class="page-inner" style="justify-content:flex-start;padding-top:clamp(34px,6vw,54px)">
+        <div class="eyebrow anim">nos plus beaux</div>
+        <h2 class="sec-title anim" contenteditable="true" spellcheck="false">Souvenirs</h2>
+        <div class="grid anim" id="photoGrid">
+          <button class="add-tile" id="addPhoto"><span class="plus">+</span><span>Ajouter une photo</span><small>autant que tu veux</small></button>
+        </div>
+      </div>
+      <div class="pagenum">3</div>
+    </article>
+
+    <!-- 4 · MOMENTS (VIDÉOS) -->
+    <article class="page pg-paper">
+      <div class="page-inner" style="justify-content:flex-start;padding-top:clamp(34px,6vw,54px)">
+        <div class="eyebrow anim">nos petits</div>
+        <h2 class="sec-title anim" contenteditable="true" spellcheck="false">Moments filmés</h2>
+        <div class="grid anim" id="videoGrid">
+          <button class="add-tile" id="addVideo"><span class="plus">+</span><span>Ajouter une vidéo</span><small>elle se lira ici</small></button>
+        </div>
+      </div>
+      <div class="pagenum">4</div>
+    </article>
+
+    <!-- 5 · DE LA PART DES ENFANTS -->
+    <article class="page pg-paper">
+      <div class="page-inner">
+        <div class="eyebrow anim">de la part de</div>
+        <h2 class="sec-title anim" contenteditable="true" spellcheck="false">tes trois enfants</h2>
+        <div class="kids anim">
+          <div><b>Samsi</b><span>la grande sœur</span></div>
+          <div><b>Hanim</b><span>le second</span></div>
+          <div><b>Saïd</b><span>le petit frère</span></div>
+        </div>
+        <p class="letter small anim" contenteditable="true" spellcheck="false">Merci pour ton amour, ta force et tous ces sacrifices qu'on n'oubliera jamais. Nous sommes fiers d'être tes enfants.</p>
+      </div>
+      <div class="pagenum">5</div>
+    </article>
+
+    <!-- 6 · CLÔTURE -->
+    <article class="page pg-dark">
+      <div class="page-inner">
+        <div class="greeting anim">Joyeux anniversaire</div>
+        <h2 class="name anim" style="font-size:clamp(2.4rem,10vw,4.4rem)" contenteditable="true" spellcheck="false">Maman</h2>
+        <p class="hero-sub anim" contenteditable="true" spellcheck="false">On t'aime plus que les mots ne pourront jamais le dire.</p>
+        <div class="heart anim" aria-hidden="true">💛</div>
+        <p class="anim" style="font-family:'Parisienne',cursive;font-size:clamp(1.3rem,4vw,1.9rem);color:var(--gold-soft)">Samsi · Hanim · Saïd</p>
+      </div>
+      <div class="pagenum">✦</div>
+    </article>
+
+  </div>
+
+  <button class="side-nav side-next" id="sideNext" aria-label="Page suivante">›</button>
+
+  <div class="controls">
+    <button class="nav-btn" id="prevBtn" aria-label="Page précédente">‹</button>
+    <div class="dots" id="dots"></div>
+    <button class="nav-btn" id="nextBtn" aria-label="Page suivante">›</button>
+  </div>
+</div>
+
+<script>
+  const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const book = document.getElementById('book');
+  const pages = [...book.querySelectorAll('.page')];
+  let idx = 0, animating = false;
+
+  // ----- Sparkles on cover -----
+  (function(){
+    if(prefersReduce) return;
+    const wrap = document.getElementById('sparkles');
+    const glyphs = ['✦','✧','·','❋'];
+    for(let i=0;i<22;i++){
+      const s=document.createElement('span');
+      s.className='sparkle'; s.textContent=glyphs[i%glyphs.length];
+      s.style.left=Math.random()*100+'%'; s.style.bottom='-24px';
+      s.style.fontSize=(0.5+Math.random()*1.2)+'rem';
+      s.style.animationDuration=(7+Math.random()*7)+'s';
+      s.style.animationDelay=(Math.random()*8)+'s';
+      wrap.appendChild(s);
+    }
+  })();
+
+  // ----- Cake -----
+  (function(){
+    const btn=document.getElementById('cakeBtn'), hint=document.getElementById('cakeHint');
+    let done=false;
+    btn.addEventListener('click',()=>{
+      if(done)return; done=true;
+      document.querySelectorAll('.flame').forEach(f=>f.classList.add('out'));
+      document.querySelectorAll('.smoke').forEach(s=>s.classList.add('go'));
+      hint.textContent='✨ Vœu envoyé — tourne la page →'; hint.classList.add('done');
+    });
+  })();
+
+  // ----- Dots -----
+  const dotsWrap=document.getElementById('dots');
+  pages.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.className='dot'+(i===0?' active':''); d.setAttribute('aria-label','Aller à la page '+(i+1));
+    d.addEventListener('click',()=>goTo(i));
+    dotsWrap.appendChild(d);
+  });
+  const dots=[...dotsWrap.children];
+
+  function updateUI(){
+    dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    document.getElementById('prevBtn').disabled = idx===0;
+    document.getElementById('nextBtn').disabled = idx===pages.length-1;
+    document.getElementById('sidePrev').disabled = idx===0;
+    document.getElementById('sideNext').disabled = idx===pages.length-1;
+  }
+
+  function replayAnim(page){
+    page.querySelectorAll('.anim').forEach(el=>{
+      el.style.animation='none'; void el.offsetWidth; el.style.animation='';
+    });
+  }
+
+  function goTo(n){
+    if(n<0||n>=pages.length||n===idx||animating) return;
+    const dir = n>idx ? 'next' : 'prev';
+    const cur = pages[idx], nxt = pages[n];
+
+    if(prefersReduce){
+      cur.classList.remove('is-active'); nxt.classList.add('is-active');
+      idx=n; updateUI(); replayAnim(nxt); return;
+    }
+
+    animating=true;
+    const ease='cubic-bezier(.34,.06,.2,1)', dur=720;
+    nxt.classList.add('is-active');
+
+    if(dir==='next'){
+      nxt.style.zIndex=1; cur.style.zIndex=2;
+      nxt.animate([{opacity:.5},{opacity:1}],{duration:dur*0.7,easing:'ease'});
+      const a=cur.animate(
+        [{transform:'rotateY(0deg)',opacity:1,filter:'brightness(1)'},
+         {transform:'rotateY(-158deg)',opacity:0,filter:'brightness(.7)'}],
+        {duration:dur,easing:ease,fill:'forwards'});
+      a.onfinish=()=>{ cur.classList.remove('is-active'); cur.style.zIndex=''; nxt.style.zIndex='';
+        cur.getAnimations().forEach(x=>x.cancel()); idx=n; animating=false; updateUI(); replayAnim(nxt); };
+    } else {
+      nxt.style.zIndex=2; cur.style.zIndex=1;
+      const a=nxt.animate(
+        [{transform:'rotateY(-158deg)',opacity:0,filter:'brightness(.7)'},
+         {transform:'rotateY(0deg)',opacity:1,filter:'brightness(1)'}],
+        {duration:dur,easing:ease,fill:'forwards'});
+      a.onfinish=()=>{ cur.classList.remove('is-active'); cur.style.zIndex=''; nxt.style.zIndex='';
+        nxt.getAnimations().forEach(x=>x.cancel()); idx=n; animating=false; updateUI(); replayAnim(nxt); };
+    }
+  }
+  const next=()=>goTo(idx+1), prev=()=>goTo(idx-1);
+
+  document.getElementById('nextBtn').addEventListener('click',next);
+  document.getElementById('prevBtn').addEventListener('click',prev);
+  document.getElementById('sideNext').addEventListener('click',next);
+  document.getElementById('sidePrev').addEventListener('click',prev);
+
+  // ----- Keyboard (ignore while editing text) -----
+  document.addEventListener('keydown',e=>{
+    if(document.activeElement && document.activeElement.isContentEditable) return;
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();next();}
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prev();}
+  });
+
+  // ----- Swipe -----
+  let sx=0,sy=0;
+  book.addEventListener('touchstart',e=>{sx=e.changedTouches[0].clientX;sy=e.changedTouches[0].clientY;},{passive:true});
+  book.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)){ dx<0?next():prev(); }
+  },{passive:true});
+
+  // ----- Add photos / videos -----
+  function makeAdder(gridId,addBtnId,kind){
+    const grid=document.getElementById(gridId), addBtn=document.getElementById(addBtnId);
+    const input=document.createElement('input');
+    input.type='file'; input.accept=kind==='video'?'video/*':'image/*'; input.multiple=true; input.style.display='none';
+    document.body.appendChild(input);
+    addBtn.addEventListener('click',e=>{e.stopPropagation();input.click();});
+    input.addEventListener('change',e=>{
+      [...e.target.files].forEach(file=>{
+        const url=URL.createObjectURL(file);
+        const frame=document.createElement('div'); frame.className='frame';
+        const media=document.createElement(kind==='video'?'video':'img'); media.src=url;
+        if(kind==='video'){media.controls=true;media.playsInline=true;} else {media.alt='souvenir';}
+        const cap=document.createElement('div'); cap.className='caption'; cap.contentEditable='true'; cap.spellcheck=false;
+        cap.textContent=kind==='video'?'Un moment à revivre…':'Une petite légende…';
+        const rm=document.createElement('button'); rm.className='remove'; rm.innerHTML='×'; rm.setAttribute('aria-label','Retirer');
+        rm.addEventListener('click',()=>{URL.revokeObjectURL(url);frame.remove();});
+        frame.append(rm,media,cap);
+        grid.insertBefore(frame,addBtn);
+      });
+      input.value='';
+    });
+  }
+  makeAdder('photoGrid','addPhoto','photo');
+  makeAdder('videoGrid','addVideo','video');
+
+  // ----- Init -----
+  pages[0].classList.add('is-active');
+  updateUI();
+  window.addEventListener('load',()=>replayAnim(pages[0]));
+</script>
+</body>
+</html>

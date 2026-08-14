@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joyeux anniversaire Maman</title>
+
+<!--
+  ╭──────────────────────────────────────────────────────────────╮
+  │  COMMENT UTILISER CE SITE                                     │
+  │                                                              │
+  │  1. Ouvre simplement ce fichier dans un navigateur (double-  │
+  │     clic). Il fonctionne tout seul, sans connexion.          │
+  │                                                              │
+  │  2. Clique sur « + Ajouter une photo » ou « + Ajouter une    │
+  │     vidéo » : choisis tes fichiers, ils apparaissent aussi-  │
+  │     tôt. Aucune modification de code nécessaire.             │
+  │                                                              │
+  │  3. Clique sur n'importe quel texte (titres, mots, légendes) │
+  │     pour l'écrire à ta façon.                                │
+  │                                                              │
+  │  Astuce : les photos ajoutées par les boutons restent le     │
+  │  temps de l'ouverture. Pour une version PERMANENTE à envoyer │
+  │  ou à mettre en ligne, place tes images à côté de ce fichier │
+  │  et remplace les blocs photo par : <img src="ma-photo.jpg">  │
+  ╰──────────────────────────────────────────────────────────────╯
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Parisienne&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --wine:#43172B;
+    --wine-2:#5E2440;
+    --rose:#C15B7E;
+    --blush:#F6DDE4;
+    --gold:#E3B25A;
+    --gold-soft:#EFCE8E;
+    --cream:#FBF1E8;
+    --ink:#2C1620;
+    --paper:#FCF6EF;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  html{scroll-behavior:smooth}
+
+  body{
+    font-family:'Karla',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  ::selection{background:var(--gold-soft);color:var(--wine)}
+
+  [contenteditable]{
+    outline:none;
+    transition:background .25s ease;
+    border-radius:6px;
+  }
+  [contenteditable]:hover{background:rgba(227,178,90,.14)}
+  [contenteditable]:focus{background:rgba(227,178,90,.20);box-shadow:0 0 0 2px rgba(227,178,90,.5)}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:6vh 24px 12vh;
+    color:var(--cream);
+    background:
+      radial-gradient(120% 90% at 50% 8%, rgba(193,91,126,.55), transparent 55%),
+      radial-gradient(140% 120% at 50% 120%, #2C0E1D 0%, var(--wine) 45%, var(--wine-2) 100%);
+    overflow:hidden;
+  }
+
+  .sparkles{position:absolute;inset:0;pointer-events:none;z-index:1}
+  .sparkle{
+    position:absolute;
+    color:var(--gold-soft);
+    opacity:0;
+    animation:rise linear infinite;
+    will-change:transform,opacity;
+  }
+  @keyframes rise{
+    0%{transform:translateY(20px) scale(.4) rotate(0);opacity:0}
+    12%{opacity:.9}
+    88%{opacity:.7}
+    100%{transform:translateY(-102svh) scale(1) rotate(140deg);opacity:0}
+  }
+
+  .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.2rem}
+
+  .greeting{
+    font-family:'Parisienne',cursive;
+    font-size:clamp(2.6rem,9vw,5rem);
+    color:var(--gold-soft);
+    line-height:1;
+    font-weight:400;
+    text-shadow:0 2px 30px rgba(0,0,0,.25);
+    animation:fadeUp 1s ease .1s both;
+  }
+
+  .name{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(3.4rem,15vw,8.5rem);
+    letter-spacing:-.01em;
+    line-height:.95;
+    margin:.1em 0 .35em;
+    color:var(--cream);
+    animation:fadeUp 1s ease .28s both;
+  }
+
+  .hero-sub{
+    font-size:clamp(1rem,2.6vw,1.35rem);
+    font-weight:300;
+    letter-spacing:.02em;
+    color:rgba(251,241,232,.85);
+    max-width:36ch;
+    animation:fadeUp 1s ease .46s both;
+  }
+
+  /* ---------- CAKE ---------- */
+  .cake-wrap{
+    margin-top:clamp(1.5rem,5vh,3rem);
+    display:flex;flex-direction:column;align-items:center;gap:.6rem;
+    animation:fadeUp 1s ease .64s both;
+  }
+  .cake-btn{
+    background:none;border:none;cursor:pointer;padding:0;line-height:0;
+    filter:drop-shadow(0 14px 26px rgba(0,0,0,.35));
+    transition:transform .3s ease;
+  }
+  .cake-btn:hover{transform:translateY(-4px)}
+  .cake-btn:focus-visible{outline:3px solid var(--gold-soft);outline-offset:8px;border-radius:12px}
+  .flame{transform-origin:center bottom;animation:flicker 1.4s ease-in-out infinite}
+  .flame.out{opacity:0;transition:opacity .5s ease}
+  .smoke{opacity:0}
+  .smoke.go{animation:puff 1.3s ease-out forwards}
+  @keyframes flicker{
+    0%,100%{transform:scale(1) translateY(0);opacity:1}
+    50%{transform:scale(1.12,.9) translateY(-1px);opacity:.85}
+  }
+  @keyframes puff{
+    0%{opacity:.6;transform:translateY(0) scale(.6)}
+    100%{opacity:0;transform:translateY(-34px) scale(1.6)}
+  }
+  .cake-hint{
+    font-family:'Karla',sans-serif;font-size:.82rem;letter-spacing:.14em;
+    text-transform:uppercase;color:rgba(239,206,142,.85);
+    transition:opacity .4s ease;
+  }
+  .cake-hint.done{color:var(--gold-soft)}
+
+  .scroll-cue{
+    position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+    z-index:2;color:rgba(251,241,232,.6);font-size:1.4rem;
+    animation:bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  /* ---------- SECTIONS ---------- */
+  section.block{padding:clamp(3.5rem,9vw,7rem) 24px;max-width:1080px;margin:0 auto}
+
+  .intro{text-align:center;max-width:640px}
+  .intro p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:italic;
+    font-size:clamp(1.3rem,3.6vw,1.9rem);line-height:1.5;color:var(--wine);
+  }
+  .intro .divider{margin:2rem auto 0}
+
+  .divider{width:74px;height:2px;border:none;background:var(--gold);opacity:.75;position:relative}
+  .divider::before,.divider::after{
+    content:"";position:absolute;top:50%;width:6px;height:6px;border-radius:50%;
+    background:var(--rose);transform:translateY(-50%)
+  }
+  .divider::before{left:-14px}
+  .divider::after{right:-14px}
+
+  .eyebrow{
+    font-family:'Parisienne',cursive;font-size:clamp(1.8rem,5vw,2.6rem);
+    color:var(--rose);line-height:1;margin-bottom:.1em;
+  }
+  .sec-title{
+    font-family:'Fraunces',serif;font-weight:500;
+    font-size:clamp(1.9rem,5.5vw,3rem);color:var(--wine);letter-spacing:-.01em;
+  }
+  .sec-head{text-align:center;margin-bottom:clamp(2rem,5vw,3.2rem)}
+  .sec-head p{margin-top:.7rem;color:#6b4a56;font-weight:300;font-size:1.02rem}
+
+  /* ---------- GALLERY ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:26px}
+  .frame{
+    background:#fff;padding:14px 14px 46px;border-radius:4px;
+    box-shadow:0 10px 30px rgba(67,23,43,.14);
+    position:relative;transition:transform .3s ease,box-shadow .3s ease;
+  }
+  .frame:nth-child(3n+1){transform:rotate(-1.4deg)}
+  .frame:nth-child(3n+2){transform:rotate(1deg)}
+  .frame:nth-child(3n){transform:rotate(-.5deg)}
+  .frame:hover{transform:rotate(0) translateY(-6px) scale(1.02);box-shadow:0 18px 44px rgba(67,23,43,.22);z-index:3}
+  .frame img,.frame video{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:2px;display:block;background:#eee}
+  .frame video{aspect-ratio:auto}
+  .caption{
+    position:absolute;left:14px;right:14px;bottom:12px;text-align:center;
+    font-family:'Fraunces',serif;font-style:italic;color:#7a5563;font-size:.98rem;
+  }
+  .remove{
+    position:absolute;top:-10px;right:-10px;width:28px;height:28px;border-radius:50%;
+    border:none;background:var(--wine);color:#fff;cursor:pointer;font-size:15px;line-height:1;
+    box-shadow:0 3px 10px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease
+  }
+  .frame:hover .remove,.remove:focus-visible{opacity:1}
+
+  .add-tile{
+    border:2.5px dashed var(--rose);background:rgba(193,91,126,.05);
+    border-radius:8px;min-height:230px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:.5rem;cursor:pointer;
+    color:var(--rose);font-weight:500;transition:background .25s ease,border-color .25s ease;
+    text-align:center;padding:20px;font-family:'Karla',sans-serif;font-size:1rem;
+  }
+  .add-tile:hover{background:rgba(193,91,126,.12)}
+  .add-tile:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+  .add-tile .plus{font-size:2.4rem;line-height:1;font-weight:300}
+  .add-tile small{font-weight:300;opacity:.75;font-size:.8rem}
+
+  .videos{background:linear-gradient(180deg,#fff 0%,var(--blush) 100%)}
+  .videos-wrap{max-width:1080px;margin:0 auto}
+
+  /* ---------- MESSAGES ---------- */
+  .messages{background:var(--wine);color:var(--cream);position:relative;overflow:hidden}
+  .messages::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(120% 80% at 80% 0%,rgba(193,91,126,.4),transparent 60%);
+    pointer-events:none;
+  }
+  .messages .sec-title{color:var(--cream)}
+  .messages .eyebrow{color:var(--gold-soft)}
+  .messages .sec-head p{color:rgba(251,241,232,.7)}
+  .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;position:relative;z-index:2}
+  .note{
+    background:rgba(251,241,232,.06);border:1px solid rgba(239,206,142,.25);
+    border-radius:14px;padding:28px 26px;backdrop-filter:blur(2px);
+  }
+  .note .num{
+    font-family:'Fraunces',serif;font-size:1.4rem;color:var(--gold-soft);
+    display:block;margin-bottom:.6rem;font-style:italic;
+  }
+  .note p{font-size:1.06rem;line-height:1.65;font-weight:300;color:rgba(251,241,232,.94)}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;padding:clamp(3rem,8vw,5rem) 24px;
+    background:var(--wine);color:var(--gold-soft);
+  }
+  footer .sig{font-family:'Parisienne',cursive;font-size:clamp(1.6rem,4.5vw,2.4rem);color:var(--cream)}
+  footer .heart{font-size:1.6rem;margin-top:.6rem;animation:beat 1.6s ease-in-out infinite;display:inline-block}
+  @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.2)}30%{transform:scale(1)}}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:translateY(0)}
+
+  .edit-hint{
+    position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+    background:var(--wine);color:var(--cream);padding:9px 18px;border-radius:999px;
+    font-size:.82rem;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:50;
+    display:flex;align-items:center;gap:10px;max-width:calc(100vw - 32px);
+  }
+  .edit-hint button{background:none;border:none;color:var(--gold-soft);cursor:pointer;font-size:1.1rem;line-height:1;padding:0}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="greeting">Joyeux anniversaire</div>
+      <h1 class="name" contenteditable="true" spellcheck="false">Maman</h1>
+      <p class="hero-sub" contenteditable="true" spellcheck="false">Aujourd'hui, le monde entier devrait s'arrêter pour te fêter.</p>
+
+      <div class="cake-wrap">
+        <button class="cake-btn" id="cakeBtn" aria-label="Souffler les bougies">
+          <svg width="150" height="130" viewBox="0 0 150 130" xmlns="http://www.w3.org/2000/svg">
+            <!-- flames -->
+            <g id="flames">
+              <g class="flame"><ellipse cx="45" cy="24" rx="4.5" ry="8" fill="#FFD98A"/><ellipse cx="45" cy="26" rx="2.4" ry="4.5" fill="#FF9E4A"/></g>
+              <g class="flame" style="animation-delay:.3s"><ellipse cx="75" cy="18" rx="4.5" ry="8.5" fill="#FFD98A"/><ellipse cx="75" cy="20" rx="2.4" ry="4.8" fill="#FF9E4A"/></g>
+              <g class="flame" style="animation-delay:.6s"><ellipse cx="105" cy="24" rx="4.5" ry="8" fill="#FFD98A"/><ellipse cx="105" cy="26" rx="2.4" ry="4.5" fill="#FF9E4A"/></g>
+            </g>
+            <g id="smokes">
+              <circle class="smoke" cx="45" cy="24" r="3" fill="#cbb9c2"/>
+              <circle class="smoke" cx="75" cy="18" r="3" fill="#cbb9c2"/>
+              <circle class="smoke" cx="105" cy="24" r="3" fill="#cbb9c2"/>
+            </g>
+            <!-- candles -->
+            <rect x="43" y="32" width="4" height="22" rx="2" fill="#F6DDE4"/>
+            <rect x="73" y="26" width="4" height="28" rx="2" fill="#EFCE8E"/>
+            <rect x="103" y="32" width="4" height="22" rx="2" fill="#F6DDE4"/>
+            <!-- cake -->
+            <rect x="24" y="54" width="102" height="30" rx="10" fill="#C15B7E"/>
+            <path d="M24 64 q13 12 26 0 t26 0 t26 0 t22 0 v20 q0 8-8 8 H32 q-8 0-8-8 Z" fill="#EFCE8E"/>
+            <rect x="18" y="82" width="114" height="34" rx="12" fill="#7A2B49"/>
+            <rect x="18" y="82" width="114" height="10" rx="5" fill="#8E3557"/>
+            <circle cx="40" cy="99" r="3" fill="#EFCE8E"/><circle cx="62" cy="103" r="3" fill="#F6DDE4"/>
+            <circle cx="88" cy="99" r="3" fill="#F6DDE4"/><circle cx="110" cy="103" r="3" fill="#EFCE8E"/>
+          </svg>
+        </button>
+        <span class="cake-hint" id="cakeHint">Clique sur le gâteau et fais un vœu</span>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">↓</div>
+  </header>
+
+  <!-- ============ INTRO ============ -->
+  <section class="block intro reveal">
+    <p contenteditable="true" spellcheck="false">Il y a des personnes qu'on ne remerciera jamais assez pour tout ce qu'elles nous donnent, sans jamais rien attendre en retour. Tu es la première d'entre elles.</p>
+    <hr class="divider">
+  </section>
+
+  <!-- ============ PHOTOS ============ -->
+  <section class="block reveal">
+    <div class="sec-head">
+      <div class="eyebrow">nos plus beaux</div>
+      <h2 class="sec-title" contenteditable="true" spellcheck="false">Souvenirs</h2>
+      <p>Clique pour ajouter vos photos préférées — de vous deux, de la famille…</p>
+    </div>
+    <div class="grid" id="photoGrid">
+      <button class="add-tile" id="addPhoto">
+        <span class="plus">+</span>
+        <span>Ajouter une photo</span>
+        <small>tu peux en ajouter autant que tu veux</small>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ VIDEOS ============ -->
+  <section class="videos">
+    <div class="block videos-wrap reveal">
+      <div class="sec-head">
+        <div class="eyebrow">nos petits</div>
+        <h2 class="sec-title" contenteditable="true" spellcheck="false">Moments filmés</h2>
+        <p>Les fous rires, les fêtes, les instants du quotidien.</p>
+      </div>
+      <div class="grid" id="videoGrid">
+        <button class="add-tile" id="addVideo">
+          <span class="plus">+</span>
+          <span>Ajouter une vidéo</span>
+          <small>elle se lira directement sur la page</small>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MESSAGES ============ -->
+  <section class="messages">
+    <div class="block reveal">
+      <div class="sec-head">
+        <div class="eyebrow">rien que</div>
+        <h2 class="sec-title" contenteditable="true" spellcheck="false">Pour toi</h2>
+        <p>Clique sur chaque mot pour l'écrire avec ton cœur.</p>
+      </div>
+      <div class="notes">
+        <div class="note">
+          <span class="num">Merci</span>
+          <p contenteditable="true" spellcheck="false">Pour ton amour inconditionnel, ta patience infinie, et tous ces petits gestes du quotidien qui, mis bout à bout, font de toi une maman extraordinaire.</p>
+        </div>
+        <div class="note">
+          <span class="num">Toujours</span>
+          <p contenteditable="true" spellcheck="false">Tu es mon repère quand je doute, ma force quand je faiblis, et mon plus bel exemple de courage et de douceur à la fois.</p>
+        </div>
+        <div class="note">
+          <span class="num">Je t'aime</span>
+          <p contenteditable="true" spellcheck="false">Chaque année passée à tes côtés est un cadeau. J'espère t'offrir autant de bonheur et de fierté que tu m'en donnes depuis le premier jour.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="sig" contenteditable="true" spellcheck="false">Avec tout mon amour, rien que pour toi</div>
+    <div class="heart" aria-hidden="true">💛</div>
+  </footer>
+
+  <div class="edit-hint" id="editHint">
+    <span>✎ Astuce : clique sur les textes pour les personnaliser</span>
+    <button id="closeHint" aria-label="Fermer">×</button>
+  </div>
+
+<script>
+  // ----- Sparkles in hero -----
+  (function(){
+    const wrap = document.getElementById('sparkles');
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const glyphs = ['✦','✧','·','❋','✿'];
+    for(let i=0;i<26;i++){
+      const s=document.createElement('span');
+      s.className='sparkle';
+      s.textContent=glyphs[Math.floor(Math.random()*glyphs.length)];
+      s.style.left=Math.random()*100+'%';
+      s.style.bottom='-30px';
+      s.style.fontSize=(0.6+Math.random()*1.4)+'rem';
+      s.style.animationDuration=(7+Math.random()*8)+'s';
+      s.style.animationDelay=(Math.random()*8)+'s';
+      wrap.appendChild(s);
+    }
+  })();
+
+  // ----- Blow out candles -----
+  (function(){
+    const btn=document.getElementById('cakeBtn');
+    const hint=document.getElementById('cakeHint');
+    let done=false;
+    btn.addEventListener('click',()=>{
+      if(done) return; done=true;
+      document.querySelectorAll('.flame').forEach(f=>f.classList.add('out'));
+      document.querySelectorAll('.smoke').forEach(s=>s.classList.add('go'));
+      hint.textContent='✨ Vœu envoyé — joyeux anniversaire ✨';
+      hint.classList.add('done');
+    });
+  })();
+
+  // ----- Add photos / videos -----
+  function makeAdder(gridId, addBtnId, kind){
+    const grid=document.getElementById(gridId);
+    const addBtn=document.getElementById(addBtnId);
+    const input=document.createElement('input');
+    input.type='file'; input.accept=kind==='video'?'video/*':'image/*';
+    input.multiple=true; input.style.display='none';
+    document.body.appendChild(input);
+
+    addBtn.addEventListener('click',()=>input.click());
+    input.addEventListener('change',e=>{
+      [...e.target.files].forEach(file=>{
+        const url=URL.createObjectURL(file);
+        const frame=document.createElement('div');
+        frame.className='frame';
+        const media=document.createElement(kind==='video'?'video':'img');
+        media.src=url;
+        if(kind==='video'){media.controls=true;media.playsInline=true;}
+        else{media.alt='souvenir';}
+        const cap=document.createElement('div');
+        cap.className='caption'; cap.contentEditable='true'; cap.spellcheck=false;
+        cap.textContent=kind==='video'?'Un moment à revivre…':'Écris une petite légende…';
+        const rm=document.createElement('button');
+        rm.className='remove'; rm.innerHTML='×'; rm.setAttribute('aria-label','Retirer');
+        rm.addEventListener('click',()=>{URL.revokeObjectURL(url);frame.remove();});
+        frame.append(rm, media, cap);
+        grid.insertBefore(frame, addBtn);
+      });
+      input.value='';
+    });
+  }
+  makeAdder('photoGrid','addPhoto','photo');
+  makeAdder('videoGrid','addVideo','video');
+
+  // ----- Reveal on scroll -----
+  (function(){
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.15});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  })();
+
+  // ----- Close edit hint -----
+  document.getElementById('closeHint').addEventListener('click',()=>{
+    document.getElementById('editHint').style.display='none';
+  });
+  setTimeout(()=>{const h=document.getElementById('editHint');if(h)h.style.display='none';},9000);
+</script>
+</body>
+</html>
